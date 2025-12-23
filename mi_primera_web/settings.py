@@ -13,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-%ctnup+35!*5nqs$iwezjqnoe%%k21^7)o@$rv%z^_&=*kj#xk'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False  # Esto quita esa pantalla técnica y pone una elegante de "Error 404" o "500"
 
 ALLOWED_HOSTS = ['*']
 
