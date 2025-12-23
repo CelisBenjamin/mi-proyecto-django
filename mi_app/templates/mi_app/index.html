@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio - Mis Tareas{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow border-0 rounded-4">
+            <div class="card-body p-4">
+                <h1 class="h3 text-success fw-bold">¡Hola, {{ nombre_usuario }}!</h1>
+                <p class="text-muted small">Hoy es: {{ fecha|date:"D d M Y" }}</p>
+                <hr>
+                
+                <div class="mb-3 d-flex justify-content-between align-items-center">
+                    <h5 class="m-0">Mis Pendientes</h5>
+                    <span class="badge rounded-pill bg-primary">
+                        {{ pendientes }} por hacer
+                    </span>
+                </div>
+
+                <ul class="list-group list-group-flush">
+                    {% for tarea in lista_tareas %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                        <span class="{% if tarea.completada %}completada{% endif %}">
+                            {{ tarea.titulo }}
+                        </span>
+                        <div>
+                            {% if not tarea.completada %}
+                                <a href="{% url 'completar' tarea.id %}" class="btn btn-sm btn-outline-primary">Listo</a>
+                            {% else %}
+                                <span class="text-success me-2">✔</span>
+                            {% endif %}
+                            <a href="{% url 'borrar' tarea.id %}" class="btn btn-sm btn-link text-danger text-decoration-none">Eliminar</a>
+                        </div>
+                    </li>
+                    {% empty %}
+                    <li class="list-group-item text-center text-muted border-0">
+                        No hay tareas. ¡Disfruta tu día!
+                    </li>
+                    {% endfor %}
+                </ul>
+
+                <form action="{% url 'agregar' %}" method="POST" class="mt-4 d-flex gap-2">
+                    {% csrf_token %}
+                    <input type="text" name="titulo_tarea" class="form-control" placeholder="¿Qué sigue, Link?" required>
+                    <button type="submit" class="btn btn-success">Añadir</button>
+                </form>
+            </div>
+        </div>
+        
+        <p class="text-center mt-4 text-muted small">Controlado dinámicamente por Django</p>
+    </div>
+</div>
+{% endblock %}
